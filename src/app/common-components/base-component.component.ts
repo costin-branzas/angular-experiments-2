@@ -1,6 +1,5 @@
 import { Portal, ComponentPortal, DomPortalHost } from '@angular/cdk/portal';
 import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
-import { SubComponent2 } from './sub-component2.component';
 
 @Component({
   selector: 'base-component',
@@ -10,7 +9,8 @@ import { SubComponent2 } from './sub-component2.component';
   <p>{{title}}</p>
   <div #target></div>
   <ng-template [cdkPortalHost]="selectedPortal"></ng-template>
-  <button (click)='createDynamicSubComponent()'>Create Dynamic Sub Component</button>
+  <button (click)='createDynamicSubComponentWithLocalResolver()'>Create Dynamic Sub Component With Local Resolver</button>
+  <button (click)='createDynamicSubComponentWithReceivedResolver()'>Create Dynamic Sub Component With Received Resolver</button>
   <button (click)='createDynamicSubComponentWithPortal()'>Create Dynamic Sub Component With Portal</button>
 
   </div>`
@@ -20,6 +20,7 @@ export class BaseComponent {
 
   public subComponentType: any;
   
+  public subComponentFactoryResolver: ComponentFactoryResolver;
   public componentFactoryResolver: ComponentFactoryResolver;
   
   private selectedPortal: Portal<any> = null;
@@ -30,17 +31,18 @@ export class BaseComponent {
     this.componentFactoryResolver = componentFactoryResolver;
   }
 
-  createDynamicSubComponent() {
+  createDynamicSubComponentWithLocalResolver() {
     let subComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.subComponentType);
+    this.targetViewContainerRef.createComponent(subComponentFactory);
+  }
+
+  createDynamicSubComponentWithReceivedResolver() {
+    let subComponentFactory = this.subComponentFactoryResolver.resolveComponentFactory(this.subComponentType);
     this.targetViewContainerRef.createComponent(subComponentFactory);
   }
 
   createDynamicSubComponentWithPortal() {
     let subComponentPortal = new ComponentPortal(this.subComponentType);
-    //let subComponentPortal = new ComponentPortal(SubComponent2);
     this.selectedPortal = subComponentPortal;
-
-    //DomPortalHost
-
   }
 }

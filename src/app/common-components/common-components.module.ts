@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PortalModule } from '@angular/cdk/portal';
 
-import { BaseComponent } from './base-component.component'; 
-import { SubComponent2 } from './sub-component2.component';
+import { BaseComponent } from './base-component.component';
 
 
 @NgModule({
@@ -12,11 +11,9 @@ import { SubComponent2 } from './sub-component2.component';
     exports: [],
     declarations: [
         BaseComponent,
-        SubComponent2
     ],
     entryComponents: [
         BaseComponent,
-        SubComponent2
     ]
 })
 export class CommonComponentsModule {

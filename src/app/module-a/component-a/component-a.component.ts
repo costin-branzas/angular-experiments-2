@@ -29,7 +29,7 @@ export class ComponentA {
   }
 
   createDynamicBaseComponentUsingService() {
-    this.serviceA.createBaseComponent(this.targetViewContainerRef, SubComponent);
+    this.serviceA.createBaseComponent(this.targetViewContainerRef, SubComponent, this.componentFactoryResolver);
   }
 
   useService() {
